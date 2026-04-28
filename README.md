@@ -1,3 +1,4 @@
+![Python 3.10](https://img.shields.io/badge/python-3.10-blue)
 # 🛡️ Vroomi AI Security Audit
 
 > **A quantitative risk assessment of an AI assistant using Catastrophe Modeling and Contextual Mixture Distributions.**
