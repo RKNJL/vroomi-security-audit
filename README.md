@@ -1,5 +1,16 @@
 ![Python 3.10](https://img.shields.io/badge/python-3.10-blue)
 
+This happens because GitHub Markdown is very strict about indentation. If the indentation inside a code block is inconsistent, or if there are empty lines breaking the block, it renders as plain text or "comment code."
+
+Here is the fixed, copy-paste ready version of the entire README. I have ensured the code blocks are perfectly formatted.
+
+Instructions:
+
+Go to your README.md on GitHub.
+Delete everything currently in the editor.
+Copy the entire block below (from # 🛡️ to the end).
+Paste it into the editor.
+Commit changes.
 # 🛡️ Vroomi AI Security Audit
 
 > **A quantitative risk assessment of an AI assistant using Catastrophe Modeling and Contextual Mixture Distributions.**
@@ -141,6 +152,6 @@ For a detailed breakdown of the risk calculation methodology, frequency justific
 MIT License. See LICENSE for details.
 
 👤 Author
-[Brett Strassner] — AI Security Capstone Project, April 2026
+[B Strassner] — AI Security Capstone Project, April 2026
 
 "We replaced average-loss calculations with catastrophe modeling to expose the hidden tail risk that traditional models miss."
