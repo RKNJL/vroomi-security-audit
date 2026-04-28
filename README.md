@@ -36,7 +36,7 @@ Output: `output/ai_cat_mixture_model.png` (4-panel risk visualization) and `outp
 
 ### Explore the Threat Map
 
-Open `threat_map.html` in any browser for an interactive diagram of Vroomi's attack surface.
+🌐 **[View Interactive Threat Map Online](https://RKNJL.github.io/vroomi-security-audit/threat_map.html)**
 
 ### Review the Notebooks
 
