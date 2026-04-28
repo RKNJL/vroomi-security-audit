@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VROOMI AI Security Audit</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 { margin-bottom: 10px; color: #2c3e50; }
+        p.subtitle { color: #666; margin-bottom: 20px; text-align: center; max-width: 600px; }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 8px 16px;
+            border: 1px solid #ccc;
+            background: white;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        button:hover { background: #eee; }
+        button.active {
+            background: #e74c3c;
+            color: white;
+            border-color: #c0392b;
+        }
+
+        /* Diagram Container */
+        .diagram-container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 600px; /* Forces vertical fit */
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Nodes */
+        .node {
+            padding: 15px;
+            margin: 10px auto;
+            border-radius: 6px;
+            font-weight: bold;
+            width: 80%;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .node-user { background: #ffebee; border: 2px solid #c62828; color: #c62828; }
+        .node-system { background: #fff3e0; border: 2px solid #ef6c00; color: #ef6c00; }
+        .node-llm { background: #e8f5e9; border: 2px solid #2e7d32; color: #2e7d32; }
+        .node-output { background: #fff3e0; border: 2px solid #ef6c00; color: #ef6c00; }
+
+        /* Sub-components inside System */
+        .sub-components {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10px;
+            gap: 5px;
+        }
+        .sub-node {
+            padding: 8px;
+            font-size: 12px;
+            border: 1px solid #ef6c00;
+            background: #fff8e1;
+            border-radius: 4px;
+            flex: 1;
+        }
+
+        /* Arrows */
+        .arrow {
+            height: 30px;
+            width: 2px;
+            background: #ccc;
+            margin: 0 auto;
+            position: relative;
+        }
+        .arrow::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: -4px;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 8px solid #ccc;
+        }
+        .arrow-label {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 2px 5px;
+            font-size: 10px;
+            color: #666;
+            white-space: nowrap;
+        }
+
+        /* Attack Highlights */
+        .highlight-red { background: #ffcdd2 !important; border-color: #d32f2f !important; color: #b71c1c !important; box-shadow: 0 0 10px #d32f2f; }
+        .highlight-orange { background: #ffe0b2 !important; border-color: #e65100 !important; color: #bf360c !important; box-shadow: 0 0 10px #e65100; }
+        .highlight-blue { background: #bbdefb !important; border-color: #1565c0 !important; color: #0d47a1 !important; box-shadow: 0 0 10px #1565c0; }
+        .highlight-purple { background: #e1bee7 !important; border-color: #7b1fa2 !important; color: #4a148c !important; box-shadow: 0 0 10px #7b1fa2; }
+
+        .arrow.attack { background: #e74c3c !important; }
+        .arrow.attack::after { border-top-color: #e74c3c !important; }
+        .arrow.attack .arrow-label { color: #e74c3c; font-weight: bold; }
+
+        /* Info Box */
+        .info-box {
+            background: #e3f2fd;
+            border-left: 5px solid #2196f3;
+            padding: 15px;
+            width: 100%;
+            max-width: 600px;
+            border-radius: 4px;
+            text-align: left;
+        }
+        .info-box h3 { margin-top: 0; color: #1976d2; }
+        .info-box p { margin: 0; line-height: 1.5; font-size: 14px; }
+
+        /* Legend */
+        .legend {
+            margin-top: 15px;
+            font-size: 12px;
+            color: #666;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        .dot { display: inline-block; width: 10px; height: 10px; margin-right: 5px; border-radius: 2px; }
+    </style>
+</head>
+<body>
+
+    <h1>VROOMI AI Security Audit</h1>
+    <p class="subtitle">Select a threat to visualize the attack path.</p>
+
+    <div class="controls">
+        <button onclick="loadScenario('base')" class="active" id="btn-base">Baseline</button>
+        <button onclick="loadScenario('prompt')" id="btn-prompt">1. Prompt Injection</button>
+        <button onclick="loadScenario('leak')" id="btn-leak">2. Prompt Leak</button>
+        <button onclick="loadScenario('disclosure')" id="btn-disclosure">3. Info Disclosure</button>
+        <button onclick="loadScenario('output')" id="btn-output">4. Output Handling</button>
+        <button onclick="loadScenario('misinfo')" id="btn-misinfo">5. Misinformation</button>
+        <button onclick="loadScenario('poison')" id="btn-poison">6. Data Poisoning</button>
+    </div>
+
+    <div class="diagram-container">
+        <!-- User -->
+        <div id="node-user" class="node node-user">🔴 [ USER ]</div>
+        <div class="arrow"><span class="arrow-label">input</span></div>
+
+        <!-- System -->
+        <div id="node-system" class="node node-system">
+            🟡 VROOMI AI SYSTEM
+            <div class="sub-components">
+                <div id="node-sp" class="sub-node">System Prompt</div>
+                <div id="node-kb" class="sub-node">Knowledge Base</div>
+                <div id="node-te" class="sub-node">Tool Executor</div>
+            </div>
+        </div>
+        <div class="arrow"><span class="arrow-label">API call</span></div>
+
+        <!-- LLM -->
+        <div id="node-llm" class="node node-llm">🟢 [ LLM (GPT-4o-mini) ]</div>
+        <div class="arrow"><span class="arrow-label">response</span></div>
+
+        <!-- Output -->
+        <div id="node-output" class="node node-output">🟡 [ OUTPUT ]</div>
+    </div>
+
+    <div class="info-box">
+        <h3 id="info-title">Baseline Architecture</h3>
+        <p id="info-text">The VROOMI AI System acts as a semi-trusted intermediary (🟡) between the untrusted User (🔴) and the trusted LLM (🟢).</p>
+    </div>
+
+    <div class="legend">
+        <span><span class="dot" style="background:#ffebee;border:1px solid #c62828"></span>Untrusted</span>
+        <span><span class="dot" style="background:#fff3e0;border:1px solid #ef6c00"></span>Semi-Trusted</span>
+        <span><span class="dot" style="background:#e8f5e9;border:1px solid #2e7d32"></span>Trusted</span>
+        <span><span class="dot" style="background:#e74c3c"></span>Threat</span>
+    </div>
+
+    <script>
+        // Data for each scenario
+        const scenarios = {
+            base: {
+                title: "Baseline Architecture",
+                text: "Normal data flow. User sends input to VROOMI, which calls the LLM. The LLM returns a response to the Output.",
+                action: () => reset()
+            },
+            prompt: {
+                title: "1. Prompt Injection ⚠️",
+                text: "<strong>Path:</strong> User → LLM (Bypass)<br><strong>Issue:</strong> User sends malicious input that bypasses VROOMI safeguards and directly manipulates the LLM.",
+                action: () => {
+                    reset();
+                    document.getElementById('node-user').classList.add('highlight-red');
+                    document.getElementById('node-llm').classList.add('highlight-red');
+                    // Highlight the arrow visually by changing the label
+                    document.querySelector('.arrow:nth-child(2) .arrow-label').textContent = "⚠️ Injection";
+                    document.querySelector('.arrow:nth-child(2)').classList.add('attack');
+                }
+            },
+            leak: {
+                title: "2. System Prompt Leak ⚠️",
+                text: "<strong>Path:</strong> System Prompt → Output<br><strong>Issue:</strong> The LLM accidentally reveals the hidden System Prompt instructions to the user.",
+                action: () => {
+                    reset();
+                    document.getElementById('node-sp').classList.add('highlight-orange');
+                    document.getElementById('node-output').classList.add('highlight-orange');
+                    document.querySelector('.arrow:nth-child(4) .arrow-label').textContent = "⚠️ Leak";
+                    document.querySelector('.arrow:nth-child(4)').classList.add('attack');
+                }
+            },
+            disclosure: {
+                title: "3. Sensitive Info Disclosure ⚠️",
+                text: "<strong>Path:</strong> Knowledge Base → Output<br><strong>Issue:</strong> Private data from the Knowledge Base is retrieved and shown to the user.",
+                action: () => {
+                    reset();
+                    document.getElementById('node-kb').classList.add('highlight-red');
+                    document.getElementById('node-output').classList.add('highlight-red');
+                    document.querySelector('.arrow:nth-child(4) .arrow-label').textContent = "⚠️ Leak";
+                    document.querySelector('.arrow:nth-child(4)').classList.add('attack');
+                }
+            },
+            output: {
+                title: "4. Improper Output Handling ⚠️",
+                text: "<strong>Path:</strong> Output → User<br><strong>Issue:</strong> The system fails to sanitize the LLM output before showing it to the user.",
+                action: () => {
+                    reset();
+                    document.getElementById('node-output').classList.add('highlight-blue');
+                    document.getElementById('node-user').classList.add('highlight-blue');
+                    // No arrow to highlight here as it's the final step, but we highlight the nodes
+                }
+            },
+            misinfo: {
+                title: "5. Misinformation ⚠️",
+                text: "<strong>Path:</strong> LLM → Output<br><strong>Issue:</strong> The LLM generates false information (hallucination) which is passed to the user.",
+                action: () => {
+                    reset();
+                    document.getElementById('node-llm').classList.add('highlight-blue');
+                    document.getElementById('node-output').classList.add('highlight-blue');
+                    document.querySelector('.arrow:nth-child(4) .arrow-label').textContent = "⚠️ Falsehood";
+                    document.querySelector('.arrow:nth-child(4)').classList.add('attack');
+                }
+            },
+            poison: {
+                title: "6. Data Poisoning ⚠️",
+                text: "<strong>Path:</strong> Knowledge Base → LLM<br><strong>Issue:</strong> Corrupted data in the Knowledge Base influences the LLM's behavior.",
+                action: () => {
+                    reset();
+                    document.getElementById('node-kb').classList.add('highlight-purple');
+                    document.getElementById('node-llm').classList.add('highlight-purple');
+                    document.querySelector('.arrow:nth-child(3) .arrow-label').textContent = "⚠️ Poison";
+                    document.querySelector('.arrow:nth-child(3)').classList.add('attack');
+                }
+            }
+        };
+
+        function reset() {
+            // Remove all highlight classes
+            const nodes = document.querySelectorAll('.node, .sub-node');
+            nodes.forEach(n => {
+                n.classList.remove('highlight-red', 'highlight-orange', 'highlight-blue', 'highlight-purple');
+            });
+            
+            // Reset arrows
+            const arrows = document.querySelectorAll('.arrow');
+            arrows.forEach(a => {
+                a.classList.remove('attack');
+                // Reset labels based on default text
+                if(a === document.querySelectorAll('.arrow')[0]) a.querySelector('.arrow-label').textContent = "input";
+                if(a === document.querySelectorAll('.arrow')[1]) a.querySelector('.arrow-label').textContent = "API call";
+                if(a === document.querySelectorAll('.arrow')[2]) a.querySelector('.arrow-label').textContent = "response";
+            });
+        }
+
+        function loadScenario(key) {
+            // Update buttons
+            document.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+            document.getElementById('btn-' + key).classList.add('active');
+
+            // Update Info Box
+            document.getElementById('info-title').innerHTML = scenarios[key].title;
+            document.getElementById('info-text').innerHTML = scenarios[key].text;
+
+            // Run Action
+            scenarios[key].action();
+        }
+    </script>
+</body>
+</html>
