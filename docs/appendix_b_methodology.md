@@ -1,9 +1,9 @@
 # Appendix B: Risk Assessment Methodology
 
 ## 1. Overview
-This appendix details the methodology used to quantify the financial and human impact risks associated with the six identified AI threat vectors in the Vroomi Assistant system. The methodology is grounded in **ISO/IEC 23894:2023** (*Information technology — Artificial intelligence — Guidance on risk management*), which extends the generic risk management framework of ISO 31000:2018 with AI-specific considerations.
+This appendix details the methodology used to quantify the financial and human impact risks associated with the six identified AI threat vectors in the Vroomi Assistant system. The methodology is grounded in **ISO/IEC 23894:2023** (Information technology - Artificial intelligence - Guidance on risk management), which extends the generic risk management framework of ISO 31000:2018 with AI-specific considerations.
 
-Given the nascent stage of AI-specific incident data, this assessment employs a **Relative Risk Scaling** approach, anchoring estimates to established cybersecurity frameworks, industry threat intelligence, and expert consensus from leading security organizations. This approach is consistent with ISO/IEC 23894:2023, Clause 4, Principle (f), which notes that *"as AI is an emerging technology and constantly evolving, historical information can be limited, and future expectations can change quickly. Organizations should take this into account."*
+Given the nascent stage of AI-specific incident data, this assessment employs a **Relative Risk Scaling** approach, anchoring estimates to established cybersecurity frameworks, industry threat intelligence, and expert consensus from leading security organizations. This approach is consistent with ISO/IEC 23894:2023, Clause 4, Principle (f), which notes that "as AI is an emerging technology and constantly evolving, historical information can be limited, and future expectations can change quickly. Organizations should take this into account."
 
 The methodology follows a **Qualitative-to-Quantitative** conversion process:
 1.  **Threat Identification:** Based on the OWASP Top 10 for LLMs and MITRE ATLAS.
@@ -16,10 +16,10 @@ ISO/IEC 23894:2023, Table 1 defines several principles for AI risk management th
 
 | ISO/IEC 23894 Principle | Application in This Assessment |
 | :--- | :--- |
-| **(d) Inclusive:** *"Organizations should seek dialog with diverse internal and external groups... to incorporate feedback and awareness into the risk management process."* | The **Dual-Impact Model** (Financial + Human) ensures that non-financial stakeholder harms (privacy, safety, trust) are quantified alongside business losses, preventing a purely financial lens from obscuring societal impacts. |
-| **(e) Dynamic:** *"The nature of AI systems is itself dynamic, due to continuous learning, refining, evaluating, and validating... Dynamic risk management is particularly important for AI systems."* | The **Contextual Mixture Model** captures the dynamic nature of AI risk by modeling each threat as a bimodal distribution (Nuisance vs. Catastrophe), reflecting how the same attack type can produce vastly different outcomes depending on context. |
-| **(f) Best available information:** *"Historical information can be limited, and future expectations can change quickly."* | Frequency estimates are explicitly framed as **modeled scenarios** rather than empirical predictions, anchored to the best available industry data (Cisco 2025, OWASP, Verizon DBIR). All estimates include uncertainty ranges. |
-| **(g) Human and cultural factors:** *"Organizations should focus on identifying how AI systems interact with pre-existing societal patterns that can lead to impacts on equitable outcomes, privacy, freedom of expression, fairness, safety, security..."* | The **Weighted VSLY** framework converts qualitative human harms (psychological harm, privacy violation, safety risk, trust erosion, autonomy violation) into quantifiable metrics, ensuring they are not dismissed as "intangible." |
+| **(d) Inclusive:** "Organizations should seek dialog with diverse internal and external groups... to incorporate feedback and awareness into the risk management process." | The **Dual-Impact Model** (Financial + Human) ensures that non-financial stakeholder harms (privacy, safety, trust) are quantified alongside business losses, preventing a purely financial lens from obscuring societal impacts. |
+| **(e) Dynamic:** "The nature of AI systems is itself dynamic, due to continuous learning, refining, evaluating, and validating... Dynamic risk management is particularly important for AI systems." | The **Contextual Mixture Model** captures the dynamic nature of AI risk by modeling each threat as a bimodal distribution (Nuisance vs. Catastrophe), reflecting how the same attack type can produce vastly different outcomes depending on context. |
+| **(f) Best available information:** "Historical information can be limited, and future expectations can change quickly." | Frequency estimates are explicitly framed as **modeled scenarios** rather than empirical predictions, anchored to the best available industry data (Cisco 2025, OWASP, Verizon DBIR). All estimates include uncertainty ranges. |
+| **(g) Human and cultural factors:** "Organizations should focus on identifying how AI systems interact with pre-existing societal patterns that can lead to impacts on equitable outcomes, privacy, freedom of expression, fairness, safety, security..." | The **Weighted VSLY** framework converts qualitative human harms (psychological harm, privacy violation, safety risk, trust erosion, autonomy violation) into quantifiable metrics, ensuring they are not dismissed as "intangible." |
 
 ## 3. Frequency Estimation Methodology
 Exact historical frequencies for AI-specific attacks (e.g., prompt injections, data poisoning) are not yet publicly available in standardized databases. Consistent with ISO/IEC 23894:2023, Principle (f), frequencies were estimated using a **Relative Risk Scaling** methodology, calibrated against:
@@ -42,7 +42,7 @@ Exact historical frequencies for AI-specific attacks (e.g., prompt injections, d
 ## 4. Impact Modeling: Catastrophe & Mixture Distributions
 Traditional risk models (Average Loss) fail to capture the "Black Swan" nature of AI risks. A single data poisoning event can be 10,000x more damaging than a typical prompt injection. To address this, we utilized **Catastrophe Modeling** with **Pareto Distributions** (Power Laws) to model the "heavy tail" of risk.
 
-This approach is consistent with ISO/IEC 23894:2023, Principle (e), which emphasizes that *"the nature of AI systems is itself dynamic"* and that risk management should *"anticipate, detect, acknowledge and respond to those changes and events in an appropriate and timely manner."* Catastrophe modeling explicitly accounts for the dynamic, non-linear risk profile of AI systems.
+This approach is consistent with ISO/IEC 23894:2023, Principle (e), which emphasizes that "the nature of AI systems is itself dynamic" and that risk management should "anticipate, detect, acknowledge and respond to those changes and events in an appropriate and timely manner." Catastrophe modeling explicitly accounts for the dynamic, non-linear risk profile of AI systems.
 
 ### 4.1 The Mixture Model Approach
 Each threat was modeled as a **Contextual Mixture** of two states:
@@ -57,10 +57,10 @@ Financial losses were modeled using **Triangular Distributions** for nuisance ev
 *   **Source:** **Verizon DBIR 2024** for average breach costs; **Cisco (2025)** for AI-specific operational disruption scenarios.
 
 ### 4.3 Human Impact (ALE)
-Human impact was quantified using a **Weighted Value of Statistical Life Year (VSLY)** framework, converting qualitative harm (privacy, safety, trust) into comparable dollar values. This approach directly addresses ISO/IEC 23894:2023, Principle (g), which requires organizations to *"focus on identifying how AI systems interact with pre-existing societal patterns that can lead to impacts on equitable outcomes, privacy, freedom of expression, fairness, safety, security..."*
+Human impact was quantified using a **Weighted Value of Statistical Life Year (VSLY)** framework, converting qualitative harm (privacy, safety, trust) into comparable dollar values. This approach directly addresses ISO/IEC 23894:2023, Principle (g), which requires organizations to "focus on identifying how AI systems interact with pre-existing societal patterns that can lead to impacts on equitable outcomes, privacy, freedom of expression, fairness, safety, security..."
 
 *   **Methodology:** Each human impact dimension (Psychological Harm, Privacy Violation, Safety Risk, Trust Erosion, Autonomy Violation) was assigned a dollar weight based on health economics literature (EPA/HHS guidelines).
-*   **Formula:** `Human ALE = Frequency × Probability × (Σ Dimension Weight × Severity Score)`
+*   **Formula:** `Human ALE = Frequency x Probability x (Sum Dimension Weight x Severity Score)`
 *   **Justification:** This approach aligns with **NIST AI RMF** guidelines for measuring "Safety" and "Fairness" impacts, ensuring that non-financial harms are not ignored in the risk calculation.
 
 ## 5. Risk Matrix & Classification
@@ -77,20 +77,18 @@ Risks were classified using a **Qualitative Risk Matrix** adapted from **ISO/IEC
 *   **Misinformation** is classified as **High** due to its very high frequency and high human impact (Trust Erosion).
 
 ## 6. Limitations & Future Work
-Consistent with ISO/IEC 23894:2023, Principle (f), this assessment acknowledges that *"historical information can be limited, and future expectations can change quickly."* Specifically:
+Consistent with ISO/IEC 23894:2023, Principle (f), this assessment acknowledges that "historical information can be limited, and future expectations can change quickly." Specifically:
 
 1.  **Frequency estimates** are modeled scenarios, not empirical observations. As AI incident databases mature (e.g., the AI Incident Database), these estimates should be recalibrated.
 2.  **Mixture ratios** (Nuisance vs. Catastrophe) are expert judgments. Real-world deployment data should be used to validate these proportions.
 3.  **Human impact weights** (VSLY) are derived from health economics, not AI-specific harm studies. As the field of AI safety matures, domain-specific harm metrics should replace generic VSLY proxies.
-4.  **Dynamic risks** (Principle e) are not fully captured. The model treats each threat independently and does not model cascade effects (e.g., Data Poisoning → Misinformation → Public Panic). Future iterations should incorporate interdependency modeling.
+4.  **Dynamic risks** (Principle e) are not fully captured. The model treats each threat independently and does not model cascade effects (e.g., Data Poisoning -> Misinformation -> Public Panic). Future iterations should incorporate interdependency modeling.
 
 ## 7. References
-1.  **ISO/IEC 23894:2023.** *Information technology — Artificial intelligence — Guidance on risk management.* International Organization for Standardization.
-2.  **OWASP Foundation.** (2023). *OWASP Top 10 for Large Language Model Applications.* https://owasp.org/www-project-top-10-for-large-language-model-applications/
-3.  **NIST.** (2023). *AI Risk Management Framework (AI RMF 1.0).* https://www.nist.gov/itl/ai-risk-management-framework
-4.  **Cisco.** (2025). *State of AI Security Report 2025.* https://www.cisco.com/c/en/us/products/security/state-of-ai-security-report.html
-5.  **Verizon.** (2024). *Data Breach Investigations Report (DBIR 2024).* https://www.verizon.com/business/resources/reports/dbir/
-6.  **MITRE Corporation.** (2023). *ATLAS: Adversarial Threat Landscape for Artificial-Intelligence Systems.* https://atlas.mitre.org/
-7.  **OWASP.** (2024). *OWASP Risk Rating Methodology.* https://owasp.org/www-community/OWASP_Risk_Rating_Methodology
-## 6. Limitations & Future Work
-Consistent with ISO/
+1.  **ISO/IEC 23894:2023.** Information technology - Artificial intelligence - Guidance on risk management. International Organization for Standardization.
+2.  **OWASP Foundation.** (2023). OWASP Top 10 for Large Language Model Applications. https://owasp.org/www-project-top-10-for-large-language-model-applications/
+3.  **NIST.** (2023). AI Risk Management Framework (AI RMF 1.0). https://www.nist.gov/itl/ai-risk-management-framework
+4.  **Cisco.** (2025). State of AI Security Report 2025. https://www.cisco.com/c/en/us/products/security/state-of-ai-security-report.html
+5.  **Verizon.** (2024). Data Breach Investigations Report (DBIR 2024). https://www.verizon.com/business/resources/reports/dbir/
+6.  **MITRE Corporation.** (2023). ATLAS: Adversarial Threat Landscape for Artificial-Intelligence Systems. https://atlas.mitre.org/
+7.  **OWASP.** (2024). OWASP Risk Rating Methodology. https://owasp.org/www-community/OWASP_Risk_Rating_Methodology
