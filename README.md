@@ -155,26 +155,26 @@ This assessment is grounded in:
 ## 📁 Repository Structure
 
 vroomi-security-audit/
-├── README.md
-├── LICENSE
-├── src/
-│   ├── ai_cat_mixture_model.py
-│   └── remediation.py
-├── notebooks/
-│   ├── task_0_baseline.ipynb
-│   ├── task_1_prompt_injection.ipynb
-│   ├── task_2_system_prompt_leak.ipynb
-│   ├── task_3_data_poisoning.ipynb
-│   ├── task_4_sensitive_disclosure.ipynb
-│   ├── task_5_misinformation.ipynb
-│   └── task_6_improper_output_handling.ipynb
-├── output/
-│   ├── ai_cat_mixture_model.png
-│   └── ai_cat_mixture_model.csv
-├── docs/
-│   ├── report.pdf
-│   └── appendix_b_methodology.md
-└── threat_map.html
++-- README.md
++-- LICENSE
++-- src/
+|   +-- ai_cat_mixture_model.py
+|   +-- remediation.py
++-- notebooks/
+|   +-- task_0_baseline.ipynb
+|   +-- task_1_prompt_injection.ipynb
+|   +-- task_2_system_prompt_leak.ipynb
+|   +-- task_3_data_poisoning.ipynb
+|   +-- task_4_sensitive_disclosure.ipynb
+|   +-- task_5_misinformation.ipynb
+|   +-- task_6_improper_output_handling.ipynb
++-- output/
+|   +-- ai_cat_mixture_model.png
+|   +-- ai_cat_mixture_model.csv
++-- docs/
+|   +-- report.pdf
+|   +-- appendix_b_methodology.md
++-- threat_map.html
 
 ---
 
