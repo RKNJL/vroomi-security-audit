@@ -154,27 +154,21 @@ This assessment is grounded in:
 
 ## 📁 Repository Structure
 
-vroomi-security-audit/
-+-- README.md
-+-- LICENSE
-+-- src/
-|   +-- ai_cat_mixture_model.py
-|   +-- remediation.py
-+-- notebooks/
-|   +-- task_0_baseline.ipynb
-|   +-- task_1_prompt_injection.ipynb
-|   +-- task_2_system_prompt_leak.ipynb
-|   +-- task_3_data_poisoning.ipynb
-|   +-- task_4_sensitive_disclosure.ipynb
-|   +-- task_5_misinformation.ipynb
-|   +-- task_6_improper_output_handling.ipynb
-+-- output/
-|   +-- ai_cat_mixture_model.png
-|   +-- ai_cat_mixture_model.csv
-+-- docs/
-|   +-- report.pdf
-|   +-- appendix_b_methodology.md
-+-- threat_map.html
+- **README.md** - Main landing page
+- **LICENSE** - MIT License
+- **src/**
+  - `ai_cat_mixture_model.py` - Simulation engine
+  - `remediation.py` - Fix code for all 6 threats
+- **notebooks/**
+  - `task_0_baseline.ipynb` - Original vulnerable code
+  - `task_1` through `task_6` - Attack & Defense demos
+- **output/**
+  - `ai_cat_mixture_model.png` - Risk visualization
+  - `ai_cat_mixture_model.csv` - Raw data
+- **docs/**
+  - `report.pdf` - Final report
+  - `appendix_b_methodology.md` - Methodology details
+- **threat_map.html** - Interactive diagram
 
 ---
 
