@@ -1,157 +1,171 @@
-![Python 3.10](https://img.shields.io/badge/python-3.10-blue)
 
-This happens because GitHub Markdown is very strict about indentation. If the indentation inside a code block is inconsistent, or if there are empty lines breaking the block, it renders as plain text or "comment code."
+# Capstone Project: Securing the Vroomi AI Assistant
 
-Here is the fixed, copy-paste ready version of the entire README. I have ensured the code blocks are perfectly formatted.
+Congratulations — you’ve made it to the final stretch of the course. This capstone is designed to help you cement what you’ve learned over the last several weeks by applying it to a realistic AI system case study.
 
-Instructions:
+In this project, you will step into the role of an AI Security Practitioner at Softmicro, the company behind the Vroomi AI assistant.
 
-Go to your README.md on GitHub.
-Delete everything currently in the editor.
-Copy the entire block below (from # 🛡️ to the end).
-Paste it into the editor.
-Commit changes.
-# 🛡️ Vroomi AI Security Audit
+Softmicro is considering adding more agentic features to Vroomi, allowing it to take more autonomous actions such as making recommendations, drafting tickets, and interacting more directly with internal systems. Before moving forward, the CISO has asked for a security assessment.
 
-> **A quantitative risk assessment of an AI assistant using Catastrophe Modeling and Contextual Mixture Distributions.**
+Your role is to investigate the system, explore how it behaves under different attack and defense scenarios, and communicate your findings clearly.
 
-Traditional risk models use **Average Loss** (Frequency × Impact). This fails for AI because most events are trivial but a few are catastrophic—and averaging hides the tail. This project replaces average-loss calculations with **Catastrophe Modeling** to expose the hidden risk that traditional models miss.
 
----
+## Project objective
 
-## 🔑 Key Findings
+The main goal of this capstone is communication, presentation, and consolidation of knowledge.
 
-| Threat | Frequency | Financial Severity (P99) | Human Severity (P99) | Risk Rating |
-|--------|-----------|--------------------------|----------------------|-------------|
-| **Data Poisoning** | 5/yr | $5M+ | $10M+ | 🔴 Critical |
-| **Sensitive Disclosure** | 40/yr | $100K+ | $500K+ | 🔴 Critical |
-| **Misinformation** | 300/yr | $20K | $5M+ | 🟠 High |
-| **Improper Output Handling** | 60/yr | $20K | $20K | 🟡 Medium |
-| **Prompt Injection** | 150/yr | $100K | $1M | 🟡 Medium |
-| **System Prompt Leak** | 20/yr | $10K | $200K | 🟢 Low |
+This is not intended to be a difficult open-ended engineering challenge. The tasks are therefore fairly scripted on purpose to help you focus on understanding what is happening, identifying key risks, and explaining those risks clearly.
 
-**5 out of 6** threat categories were successfully exploited in the baseline Vroomi system.
+There is no pass/fail, no grade, and no formal assessment. This capstone is purely for your own learning and development — so don’t stress about getting it “right”.
 
----
 
-## 🚀 Quick Start
+## How the capstone fits into the course
 
-### Run the Simulation
+This capstone replaces the labs for:
 
-```bash
-pip install numpy pandas scipy matplotlib
-python src/ai_cat_mixture_model.py
-Output: output/ai_cat_mixture_model.png (4-panel risk visualization) and output/ai_cat_mixture_model.csv (raw data).
+Week 7
+Week 8
 
-Explore the Threat Map
-Open threat_map.html in any browser for an interactive diagram of Vroomi's attack surface.
+You will spend these two weeks working through the project.
 
-Review the Notebooks
-Each notebook in notebooks/ contains an attack demo and a defense demo for one threat category:
+In Week 8, you have the option to present your findings — this could be:
 
-Notebook	Threat	What It Demonstrates
-task_0_baseline	Baseline	Vroomi's original (vulnerable) architecture
-task_1_prompt_injection	Prompt Injection	User JSON bypasses model → direct execution
-task_2_system_prompt_leak	System Prompt Leak	Debug backdoor exposes internal prompt
-task_3_data_poisoning	Data Poisoning	Fake document enters knowledge base unchecked
-task_4_sensitive_disclosure	Sensitive Disclosure	PII in context window → model reads it aloud
-task_5_misinformation	Misinformation	Conflicting docs with no trust hierarchy
-task_6_improper_output_handling	Improper Output	Model output executed without validation
-🧠 Methodology
-Why Catastrophe Modeling?
-AI risks follow power laws, not bell curves. A single data poisoning event can be 10,000× worse than a typical one. Traditional models treat this as "average loss is acceptable." Our model treats it as "existential threat."
+- a short presentation
+- a written summary
+- or a walkthrough of your analysis
 
-Traditional Model	Our Model
-"Average loss is $500K"	"95% of events cost <$1K, but 5% cost >$10M"
-Decision: "Acceptable risk"	Decision: "Fix the tail immediately"
-The Contextual Mixture Approach
-Each threat is modeled as two states:
+This is optional but highly encouraged, as it helps build real-world communication skills.
 
-Nuisance Mode (95% of events): Low impact (e.g., wrong middle name on a badge)
-Catastrophe Mode (5% of events): Massive impact (e.g., linking a victim to a crime)
-The Mixture Ratio represents the probability that a successful attack escalates from nuisance to catastrophe. This captures the contextual variance that single-distribution models miss.
 
-Dual-Impact Analysis
-We quantify both Financial and Human impact using:
+## How the capstone is structured
 
-Financial ALE: Based on regulatory fines, operational downtime, and remediation costs
-Human ALE: Based on Weighted VSLY (Value of Statistical Life Year), a proxy for societal consequence used by the EPA, FDA, and DOT
-Human harm is monetized not to price suffering, but to ensure it competes for resources alongside financial risk. Without a common unit, human impact is invisible in resource allocation.
+Each task is provided in a separate file, so you can choose the topics that interest you most.
 
-Key Metrics
-Metric	Meaning	Use Case
-VaR 95%	Worst case in a bad year (1-in-20)	Budgeting — how much reserve to set aside
-VaR 99%	Catastrophe threshold (1-in-100)	Survival — can the organization withstand this?
-Tail Ratio	VaR 99% ÷ Mean	How "spiky" is the risk? Higher = more unpredictable
-Mixture Ratio	% of events that are catastrophic	How often does a nuisance become a disaster?
-📊 Visualizations
-Chart	What It Shows
-Bar Chart (Severity P99)	Worst-case per-event impact for each threat
-Scatter Plot (Fin vs. Human)	Dual-impact clustering — each dot is a threat, position shows catastrophe potential
-Tail Ratio Bar	Spikiness of risk — higher bars mean the average hides extreme outcomes
-Radar Chart (Human Dimensions)	Breakdown of harm types (privacy, safety, trust, autonomy, psychological)
-Summary Table	Frequency, severity, ALE, and tail ratio for all threats
-🔧 Remediations
-All remediation code is in src/remediation.py. Key fixes:
+You can complete as many or as few tasks as you like. The tasks do not need to be completed in order.
 
-P0 — Immediate
-Fix	Threats Addressed	What It Does
-Delete extract_forced_tool()	Prompt Injection	Removes pre-model JSON parsing
-Remove DEBUG_MODE branch	System Prompt Leak	Eliminates debug backdoor
-Implement get_safe_documents()	Poisoning, Disclosure, Misinfo	Filters documents by trust/approval/sensitivity before context
-P1 — High Priority
-Fix	Threats Addressed	What It Does
-Add validate_tool_call()	Injection, Output Handling	Whitelist + type checking for tool calls
-Add verify_user_intent()	Injection, Output Handling	Confirms user requested the action
-Add redact_pii()	Sensitive Disclosure	Strips PII from model output
-Add validate_answer()	Misinformation	Cross-checks output against trusted sources
-P2 — Medium Priority
-Fix	Threats Addressed	What It Does
-Add detect_conflicts()	Misinformation	Flags contradictory documents
-Add confirmation step for destructive tools	Output Handling	Requires user OK before cancel/delete
-Implement rate limiting	All	Caps tool calls per user session
-Add logging + alerting	All	Tracks blocked actions and anomalies
-📚 Sources & Standards
-This assessment is grounded in:
+The only task that everyone should complete first is:
 
-Source	Usage
-ISO/IEC 23894:2023 — AI Risk Management Guidance	Framework for AI-specific risk principles (dynamic, inclusive, best-available-information)
-OWASP Top 10 for LLMs (2023)	Threat identification and ranking
-Cisco State of AI Security Report (2025)	Frequency estimation and threat landscape validation
-NIST AI RMF 1.0	Reliability and safety impact measurement
-MITRE ATLAS	Tactical attack lifecycle mapping
-Verizon DBIR 2024	Baseline social engineering and breach cost data
-📁 Repository Structure
-vroomi-security-audit/
-├── README.md
-├── LICENSE
-├── src/
-│   ├── ai_cat_mixture_model.py
-│   └── remediation.py
-├── notebooks/
-│   ├── task_0_baseline.ipynb
-│   ├── task_1_prompt_injection.ipynb
-│   ├── task_2_system_prompt_leak.ipynb
-│   ├── task_3_data_poisoning.ipynb
-│   ├── task_4_sensitive_disclosure.ipynb
-│   ├── task_5_misinformation.ipynb
-│   └── task_6_improper_output_handling.ipynb
-├── output/
-│   ├── ai_cat_mixture_model.png
-│   └── ai_cat_mixture_model.csv
-├── docs/
-│   ├── report.pdf
-│   └── appendix_b_methodology.md
-└── threat_map.html
-📄 Appendix
-For a detailed breakdown of the risk calculation methodology, frequency justification, and ethical considerations regarding human impact valuation, see:
+Task 0: Vroomi Baseline
 
-👉 Appendix B: Risk Assessment Methodology
+This gives you the base system overview and helps you understand how Vroomi works before you explore attacks or defenses.
 
-📄 License
-MIT License. See LICENSE for details.
 
-👤 Author
-[B Strassner] — AI Security Capstone Project, April 2026
+## Available tasks
 
-"We replaced average-loss calculations with catastrophe modeling to expose the hidden tail risk that traditional models miss."
+Task 0: Vroomi Baseline
+Explore the base Vroomi system and understand how user input, retrieval, the model, tools, and backend actions fit together.
+
+Task 1: Prompt Injection
+See how insecure handling of user input can lead to unsafe tool execution, then compare this with a defended version.
+
+Task 2: System Prompt Leakage
+Explore how internal instructions can be exposed through insecure application logic such as debug behaviour.
+
+Task 3: Data Poisoning
+See how false or manipulated information in a knowledge base can influence model behaviour and outputs.
+
+Task 4: Sensitive Information Disclosure
+Investigate how sensitive internal data can be exposed when the system includes it in model-accessible context.
+
+Task 5: Misinformation
+Explore how mixed-quality or misleading documents can cause the assistant to produce believable but incorrect answers.
+
+Task 6: Improper Output Handling
+See what happens when a system trusts model outputs too readily, especially when the model generates tool calls or structured instructions.
+
+
+## What you should do
+
+### 1. Start with Task 0
+
+Everyone should begin with the Vroomi baseline so you have a shared understanding of the system before investigating any risks.
+
+As you work through it, pay attention to:
+
+- how Vroomi processes user input
+- how it retrieves or uses information
+- how it generates responses
+- where it can take actions or make recommendations
+- where trust boundaries exist
+- where things could go wrong
+
+
+### 2. Choose the tasks you want to explore
+
+You do not need to complete every task. Choose whichever attack and defense scenarios you want to investigate.
+
+For each task, focus on:
+
+- what the system is doing
+- what the risk is
+- what changes in the defended version
+- what this might mean in a real organisation
+
+
+### 3. Create a system diagram
+
+Draw a simple diagram of the Vroomi system. It does not need to be perfect — clarity matters more than complexity.
+
+Your diagram might include:
+
+- key components such as user input, retrieval, model, knowledge base, tools, and actions
+- trust boundaries showing what is trusted vs untrusted
+- annotations showing where threats are most likely to occur
+
+A system diagram template has been provided to help you get started.
+
+
+### 4. Record your findings
+
+As you work, take note of the behaviours you observe and the main risks you identify.
+
+A report template has also been provided to help you summarise your findings.
+
+You are welcome to consider other risks that are not already included in the tasks in the report.
+
+
+### 5. Prepare your recommendation
+
+Your final task is to communicate your findings clearly, as though you were presenting them to the CISO or another decision-maker.
+
+Your recommendation might consider:
+
+- the main risks in the current system
+- which risks seem most serious
+- whether the defences appear effective
+- whether the system seems ready for more agentic features
+- what safeguards should be added first
+
+You may conclude with a:
+
+Go, No-Go, or Conditional Go with safeguards
+
+
+## How to approach this project
+
+Think of this less as a coding task and more as an investigation.
+
+You are:
+
+- testing assumptions
+- identifying weaknesses
+- comparing attack and defense behaviour
+- explaining risk clearly
+- practising how to communicate AI - security issues to others
+
+There is no single correct answer. What matters most is that you understand what you are seeing and can explain it in a clear, structured way.
+
+
+## Final note
+
+This capstone is not graded, there is no pass or fail, and there is no formal assessment attached to it. It is designed purely to help you build confidence and consolidate your understanding — so take the pressure off yourself.
+
+Instead, think of this as something you can showcase:
+
+- you can include your findings in a portfolio
+- upload your work to GitHub
+- or share it with prospective employers
+
+Being able to clearly explain how AI systems fail — and how to secure them — is a valuable real-world skill.
+
+Take your time, explore the tasks that interest you, and use this as an opportunity to build something you’re proud to share.
