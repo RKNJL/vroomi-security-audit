@@ -188,7 +188,7 @@ MIT License. See [LICENSE](LICENSE) for details.
 
 ## 👤 Author
 
-**[B Strassner]** — AI Security Capstone Project, April 2026
+**[RKNJL]** — AI Security Capstone Project, April 2026
 
 ---
 
